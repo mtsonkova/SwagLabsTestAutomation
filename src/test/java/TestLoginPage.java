@@ -1,3 +1,4 @@
+import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,15 +8,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class TestLoginPage {
-
-    public WebDriver driver;
-    @BeforeTest(alwaysRun = true)
-    public void setUp() {
-        driver = new ChromeDriver();
-        String baseUrl = "https://www.saucedemo.com/";
-        driver.get(baseUrl);
-    }
+public class TestLoginPage extends BaseTest {
 
     @Test
     public void LoginWithValidUserNameAndPasswordAndCheckPageTltle() {
@@ -30,10 +23,6 @@ public class TestLoginPage {
         String expectedUrl = "https://www.saucedemo.com/inventory.html";
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
+    }
 
-    }
-    @AfterTest
-    public void tearDown() {
-        driver.quit();
-    }
 }
