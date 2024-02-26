@@ -6,9 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.sql.SQLOutput;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 public class E2ETests extends BaseTest {
