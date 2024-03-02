@@ -19,6 +19,7 @@ public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
 
     public void onTestStart(ITestResult result) {
+        test.log(Status.INFO, "Test execution started");
         test = extent.createTest(result.getMethod().getMethodName());
     }
 
