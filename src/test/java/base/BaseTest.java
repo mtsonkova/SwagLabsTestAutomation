@@ -1,5 +1,6 @@
 package base;
 
+import Reporter.ExtentReporterNG;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
@@ -17,7 +18,6 @@ import java.nio.file.Files;
 
 public class BaseTest {
 protected static WebDriver driver;
-
     @BeforeTest(alwaysRun = true)
     public void setUp() {
         driver = new ChromeDriver();
