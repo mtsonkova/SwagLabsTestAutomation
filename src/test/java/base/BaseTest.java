@@ -33,7 +33,8 @@ protected static WebDriver driver;
     public static File getScreenshot(String testCaseName, WebDriver driver) throws IOException {
         TakesScreenshot ts = (TakesScreenshot)driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        String destPath = System.getProperty("user.dir") + "src/test/Screenshots" + testCaseName + ".png";
+
+        String destPath = System.getProperty("user.dir") +"\\src" + testCaseName + ".png";
         File file = new File(destPath);
        Files.copy(source.toPath(), file.toPath());
        return file;

@@ -59,6 +59,5 @@ public class E2ETests extends BaseTest {
        String text = confirmationHeader.getText();
 
         Assert.assertTrue(text.contains("Thank you"));
-
-        }
+       }
 }

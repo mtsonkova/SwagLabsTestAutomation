@@ -19,27 +19,13 @@ public class Listeners extends BaseTest implements ITestListener {
     ExtentTest test;
 
     public void onTestStart(ITestResult result) {
-        test.log(Status.INFO, "Test execution started");
+
         test = extent.createTest(result.getMethod().getMethodName());
+        System.out.println("Test started");
     }
 
     public void onTestSuccess(ITestResult result) {
         test.log(Status.PASS, "Test passed");
-
-        try {
-            driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        }
-        File destFile = null;
-        try {
-            destFile = getScreenshot(result.getMethod().getMethodName(), driver);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        test.pass(result.getName()).addScreenCaptureFromPath(destFile.getAbsolutePath());
     }
 
     public void onTestFailure(ITestResult result) {
@@ -73,6 +59,7 @@ public class Listeners extends BaseTest implements ITestListener {
     }
 
     public void onStart(ITestContext context) {
+        System.out.println("Test started");
     }
 
     public void onFinish(ITestContext context) {
