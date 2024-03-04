@@ -38,7 +38,6 @@ public class TestLoginPage extends BaseTest {
         String expectedUrl = "https://www.saucedemo.com/inventory.html";
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
-
     }
 
 }

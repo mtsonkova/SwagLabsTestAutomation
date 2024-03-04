@@ -28,10 +28,11 @@ public class Listeners extends BaseTest implements ITestListener {
     }
 
     public void onTestFailure(ITestResult result) {
-        test.log(Status.FAIL, "Test failed");
-        test.fail(result.getThrowable());
+        //test.log(Status.FAIL, "Test failed");
+        //test.fail(result.getThrowable());
+        System.out.println("Test failed");
 
-
+        /*
         try {
             driver = (WebDriver) result.getTestClass().getRealClass().getField("driver").get(result.getInstance());
         } catch (IllegalAccessException e) {
@@ -39,6 +40,8 @@ public class Listeners extends BaseTest implements ITestListener {
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
+
+         */
         File destFile = null;
         try {
             destFile = getScreenshot(result.getMethod().getMethodName(), driver);

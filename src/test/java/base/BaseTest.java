@@ -8,9 +8,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,14 +16,14 @@ import java.nio.file.Files;
 
 public class BaseTest {
 protected static WebDriver driver;
-    @BeforeTest(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         String baseUrl = "https://www.saucedemo.com/";
         driver.get(baseUrl);
     }
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
         driver.quit();
     }
@@ -34,7 +32,7 @@ protected static WebDriver driver;
         TakesScreenshot ts = (TakesScreenshot)driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
 
-        String destPath = System.getProperty("user.dir") +"\\src" + testCaseName + ".png";
+        String destPath = System.getProperty("user.dir" +"\\src\\Screenshots" ) + testCaseName + ".png";
         File file = new File(destPath);
        Files.copy(source.toPath(), file.toPath());
        return file;

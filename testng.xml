@@ -4,9 +4,10 @@
     <listeners>
         <listener class-name="base.Listeners"/>
     </listeners>
-    <test verbose="1" preserve-order="true" name="D:/Projects/SwagLabsTestAutomation">
+    <test verbose="2" preserve-order="true" name="D:/Projects/SwagLabsTestAutomation">
         <classes>
-          <class name="TestLoginPage"></class>
+            <class name="TestLoginPage"></class>
+            <class name="E2ETests"></class>
         </classes>
     </test>
 </suite>
