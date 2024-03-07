@@ -25,7 +25,7 @@ import java.util.Properties;
 
 public class BaseTest {
     protected static WebDriver driver;
-
+    private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws IOException {
         driver = initializeDriver();
@@ -66,7 +66,7 @@ public class BaseTest {
             driver = new EdgeDriver();
         }
 
-
+        driverThreadLocal.set(driver);
         driver.manage().window().maximize();
         driver.get(baseUrl);
 
