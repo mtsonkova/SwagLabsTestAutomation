@@ -28,8 +28,8 @@ public class Listeners extends BaseTest implements ITestListener {
     }
 
     public void onTestFailure(ITestResult result) {
-        //test.log(Status.FAIL, "Test failed");
-        //test.fail(result.getThrowable());
+        test.log(Status.FAIL, "Test failed");
+        test.fail(result.getThrowable());
         System.out.println("Test failed");
 
         /*
