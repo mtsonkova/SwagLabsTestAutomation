@@ -42,4 +42,11 @@ public class LoginPage {
         return errorMessage;
     }
 
+    public ProductsPage validLogin() {
+        enterUserName("standard_user");
+        enterPassword("secret_sauce");
+        clickLoginButton();
+        return new ProductsPage(driver);
+    }
+
 }

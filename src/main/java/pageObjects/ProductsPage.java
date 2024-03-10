@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -20,7 +21,7 @@ public class ProductsPage {
     @FindBy(className = "product_sort_container")
     WebElement sort;
 
-    Select productsSorter = new Select(sort);
+    private Select productsSorter;
     @FindBy(className = "shopping_cart_link")
     WebElement shoppingCart;
 
@@ -40,18 +41,22 @@ public class ProductsPage {
     }
 
     public void sortProductsByNameFromAtoZ() {
+        productsSorter = new Select(sort);
         productsSorter.selectByVisibleText("Name (A to Z)");
     }
 
     public void sortProductsByNameFromZtoA() {
+        productsSorter = new Select(sort);
         productsSorter.selectByVisibleText("Name (Z to A)");
     }
 
     public void sortProductsByPriceLowToHigh() {
+        productsSorter = new Select(sort);
         productsSorter.selectByVisibleText("Price (low to high)");
     }
 
     public void sortProductsByPriceHighToLow() {
+        productsSorter = new Select(sort);
         productsSorter.selectByVisibleText("Price (high to low)");
     }
 
@@ -59,53 +64,55 @@ public class ProductsPage {
         return inventoryItemsDescription;
     }
 
+    private void clickOnAddBtn(WebElement item) {
+        btnAdd = item.findElement(By.className("btn_inventory"));
+
+        if (btnAdd.getText().equalsIgnoreCase("add to cart")) {
+            btnAdd.click();
+        }
+    }
+
+    private void clickOnRemoveBtn(WebElement item) {
+        btnRemove = item.findElement(By.className("btn_inventory"));
+
+        if (btnRemove.getText().equalsIgnoreCase("Remove")) {
+            btnRemove.click();
+        }
+    }
     public void AddAllProductsToTheShoppingCart() {
 
-        for(WebElement item : inventoryItemsDescription) {
-            btnAdd = item.findElement(By.className("btn_inventory"));
-
-            if(btnAdd.getText().equalsIgnoreCase("add to cart")) {
-                btnAdd.click();
-            }
+        ArrayList<WebElement> allProducts = getAllInventoryItemsDescription();
+        for (WebElement item : allProducts) {
+            clickOnAddBtn(item);
         }
     }
     public void RemoveAllProductsFromTheShoppingCart() {
 
-        for(WebElement item : inventoryItemsDescription) {
-            btnRemove = item.findElement(By.className("btn_inventory"));
-
-            if(btnAdd.getText().equalsIgnoreCase("Remove")) {
-                btnRemove.click();
-            }
+        for (WebElement item : inventoryItemsDescription) {
+            clickOnRemoveBtn(item);
         }
     }
 
     public void AddProductInTheShoppingCartByName(String productName) {
-        for(WebElement item : inventoryItemsDescription) {
+        for (WebElement item : inventoryItemsDescription) {
             String itemName = item.findElement(By.className("inventory_item_name")).getText();
 
             if (itemName.equalsIgnoreCase(productName)) {
-                btnAdd = item.findElement(By.className("btn_inventory"));
-                if(btnAdd.getText().equalsIgnoreCase("Add to cart")) {
-                    btnAdd.click();
-                    break;
-                }
-            }
-        }
-    }
-
-    public void RemoveProductFromTheShoppingCartByName(String productName) {
-        for(WebElement item : inventoryItemsDescription) {
-            String itemName = item.findElement(By.className("inventory_item_name")).getText();
-
-            if (itemName.equalsIgnoreCase(productName)) {
-                btnRemove = item.findElement(By.className("btn_inventory"));
-                btnAdd.click();
+                clickOnAddBtn(item);
                 break;
             }
         }
     }
+    public void RemoveProductFromTheShoppingCartByName(String productName) {
+        for (WebElement item : inventoryItemsDescription) {
+            String itemName = item.findElement(By.className("inventory_item_name")).getText();
 
+            if (itemName.equalsIgnoreCase(productName)) {
+                clickOnRemoveBtn(item);
+                break;
+            }
+        }
+    }
     public void clickOnTheShoppingCart() {
         shoppingCart.click();
     }
