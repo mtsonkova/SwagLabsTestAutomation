@@ -3,12 +3,11 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProductsPage {
     private WebDriver driver;
@@ -22,13 +21,15 @@ public class ProductsPage {
     WebElement sort;
 
     private Select productsSorter;
+
     @FindBy(className = "shopping_cart_link")
     WebElement shoppingCart;
 
     @FindBy(className = "shopping_cart_badge")
     WebElement shoppingCartBadge;
+
     @FindBy(className = "inventory_item_description")
-    ArrayList<WebElement> inventoryItemsDescription;
+    List<WebElement> inventoryItemsDescription;
 
 
     public ProductsPage(WebDriver driver) {
@@ -60,7 +61,7 @@ public class ProductsPage {
         productsSorter.selectByVisibleText("Price (high to low)");
     }
 
-    public ArrayList<WebElement> getAllInventoryItemsDescription() {
+    public List<WebElement> getAllInventoryItemsDescription() {
         return inventoryItemsDescription;
     }
 
@@ -81,7 +82,7 @@ public class ProductsPage {
     }
     public void AddAllProductsToTheShoppingCart() {
 
-        ArrayList<WebElement> allProducts = getAllInventoryItemsDescription();
+        List<WebElement> allProducts = getAllInventoryItemsDescription();
         for (WebElement item : allProducts) {
             clickOnAddBtn(item);
         }
