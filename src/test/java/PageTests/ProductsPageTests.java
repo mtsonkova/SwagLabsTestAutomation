@@ -22,4 +22,12 @@ public class ProductsPageTests extends BaseTest {
         String pageTitle = productsPage.getProductsPageTitle();
         Assert.assertEquals(pageTitle, "Products");
     }
+
+    @Test
+    public void addAllProductsInTheShoppingCart() {
+        productsPage.AddAllProductsToTheShoppingCart();
+        int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
+        Assert.assertEquals(cartBadgeValue, 6);
+    }
+
 }

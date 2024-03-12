@@ -118,4 +118,10 @@ public class ProductsPage {
         shoppingCart.click();
     }
 
+    public int getShoppingCartBadgeValue() {
+        String text = shoppingCartBadge.getText();
+        int num = Integer.parseInt(text);
+        return num;
+    }
+
 }
