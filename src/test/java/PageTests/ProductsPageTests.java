@@ -3,9 +3,14 @@ package PageTests;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 import pageObjects.ProductsPage;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
@@ -30,4 +35,7 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(cartBadgeValue, 6);
     }
 
-}
+
+
+
+    }
