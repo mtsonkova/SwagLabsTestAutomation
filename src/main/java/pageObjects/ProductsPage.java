@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductsPage {
@@ -122,6 +123,17 @@ public class ProductsPage {
         String text = shoppingCartBadge.getText();
         int num = Integer.parseInt(text);
         return num;
+    }
+
+    public ArrayList<String> getProductNames() {
+        ArrayList<String> productNames = new ArrayList<String>();
+
+       List<WebElement> items = getAllInventoryItemsDescription();
+       for(WebElement item: items) {
+           String productName = item.findElement(By.className("inventory_item_name")).getText();
+           productNames.add(productName);
+       }
+        return productNames;
     }
 
 }

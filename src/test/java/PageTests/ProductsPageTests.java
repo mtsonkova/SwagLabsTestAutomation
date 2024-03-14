@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 import pageObjects.ProductsPage;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,46 @@ public class ProductsPageTests extends BaseTest {
         productsPage.AddAllProductsToTheShoppingCart();
         int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
         Assert.assertEquals(cartBadgeValue, 6);
+    }
+
+    @Test(dataProvider = "filterData")
+    public void filterAllProductsByGivenCriteria(String criteria, List<String> result) {
+        if(criteria.equalsIgnoreCase("Name (A to Z)")) {
+            productsPage.sortProductsByNameFromAtoZ();
+        } else if(criteria.equalsIgnoreCase("Name (Z to A)")) {
+            productsPage.sortProductsByNameFromZtoA();
+        } else if(criteria.equalsIgnoreCase("Price (low to high)")) {
+            productsPage.sortProductsByPriceLowToHigh();
+        } else if(criteria.equalsIgnoreCase("Price (high to low)")) {
+            productsPage.sortProductsByPriceHighToLow();
+        }
+
+        ArrayList sortedProductNames = productsPage.getProductNames();
+        Arrays.stream(result.toArray()).toList();
+        Assert.assertEquals(sortedProductNames, result);
+    }
+
+    @DataProvider(name = "filterData")
+        public Object[][] filterData() {
+            // This method provides the test data
+            return new Object[][] {
+                    {"Name (A to Z)",
+                            Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
+                            "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)")
+                    },
+                    {"Name (Z to A)",
+                            Arrays.asList("Test.allTheThings() T-Shirt (Red)", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket",
+                                    "Sauce Labs Bolt T-Shirt", "Sauce Labs Bike Light", "Sauce Labs Backpack")
+                    },
+                    {"Price (low to high)",
+                            Arrays.asList("Sauce Labs Onesie", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
+                                    "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Backpack", "Sauce Labs Fleece Jacket")
+                    },
+                    {"Price (high to low)",
+                            Arrays.asList("Sauce Labs Fleece Jacket", "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt",
+                                    "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Bike Light", "Sauce Labs Onesie")
+                    }
+            };
     }
 
 
