@@ -1,6 +1,7 @@
 package PageTests;
 
 import base.BaseTest;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -8,13 +9,12 @@ import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 import pageObjects.ProductsPage;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
+    String productName = "";
+    boolean isDisplayed = false;
 
     @BeforeMethod
     public void setTest() {
@@ -34,6 +34,31 @@ public class ProductsPageTests extends BaseTest {
         productsPage.AddAllProductsToTheShoppingCart();
         int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
         Assert.assertEquals(cartBadgeValue, 6);
+    }
+
+    @Test(dependsOnMethods = "addAllProductsInTheShoppingCart")
+    public void removeAllProductsFromTheShoppingCart_AllAvalilableProductsAddedToCart() {
+       productsPage.RemoveAllProductsFromTheShoppingCart();
+      boolean isBadgeDisplayed =  productsPage.checkIfShoppingCartBadgeIsDisplayed();
+      Assert.assertFalse(isBadgeDisplayed);
+    }
+
+    @Test
+    public void addProductByName() {
+       productName = "Sauce Labs Onesie";
+       productsPage.AddProductInTheShoppingCartByName(productName);
+       isDisplayed = productsPage.CheckIfAddBtnChangesToRemoveForProductAddedInTheShoppingCartByName(productName);
+       Assert.assertTrue(isDisplayed);
+       int shoppingCartBadgeValue = productsPage.getShoppingCartBadgeValue();
+       Assert.assertTrue(shoppingCartBadgeValue >= 1);
+    }
+
+    @Test(dependsOnMethods = "addProductByName")
+    public void removeProductByName() {
+        productName = "Sauce Labs Onesie";
+        productsPage.RemoveProductFromTheShoppingCartByName(productName);
+        isDisplayed = productsPage.CheckIfRemoveBtnChangesToAddForProductRemovedFromTheShoppingCartByName(productName);
+        Assert.assertTrue(isDisplayed);
     }
 
     @Test(dataProvider = "filterData")

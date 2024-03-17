@@ -1,6 +1,7 @@
 package pageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -81,6 +82,7 @@ public class ProductsPage {
             btnRemove.click();
         }
     }
+
     public void AddAllProductsToTheShoppingCart() {
 
         List<WebElement> allProducts = getAllInventoryItemsDescription();
@@ -88,6 +90,7 @@ public class ProductsPage {
             clickOnAddBtn(item);
         }
     }
+
     public void RemoveAllProductsFromTheShoppingCart() {
 
         for (WebElement item : inventoryItemsDescription) {
@@ -105,6 +108,33 @@ public class ProductsPage {
             }
         }
     }
+
+    public boolean CheckIfAddBtnChangesToRemoveForProductAddedInTheShoppingCartByName(String productName) {
+        boolean isBtnDisplayed = false;
+        for (WebElement item : inventoryItemsDescription) {
+            String itemName = item.findElement(By.className("inventory_item_name")).getText();
+
+            if (itemName.equalsIgnoreCase(productName)) {
+                isBtnDisplayed = btnRemove.isDisplayed();
+                break;
+            }
+        }
+        return isBtnDisplayed;
+    }
+
+    public boolean CheckIfRemoveBtnChangesToAddForProductRemovedFromTheShoppingCartByName(String productName) {
+        boolean isBtnDisplayed = false;
+        for (WebElement item : inventoryItemsDescription) {
+            String itemName = item.findElement(By.className("inventory_item_name")).getText();
+
+            if (itemName.equalsIgnoreCase(productName)) {
+                isBtnDisplayed = btnAdd.isDisplayed();
+                break;
+            }
+        }
+        return isBtnDisplayed;
+    }
+
     public void RemoveProductFromTheShoppingCartByName(String productName) {
         for (WebElement item : inventoryItemsDescription) {
             String itemName = item.findElement(By.className("inventory_item_name")).getText();
@@ -115,6 +145,7 @@ public class ProductsPage {
             }
         }
     }
+
     public void clickOnTheShoppingCart() {
         shoppingCart.click();
     }
@@ -125,14 +156,26 @@ public class ProductsPage {
         return num;
     }
 
+    public boolean checkIfShoppingCartBadgeIsDisplayed() {
+        boolean isBadgeDisplayed = false;
+        try {
+            isBadgeDisplayed = shoppingCartBadge.isDisplayed();
+
+        } catch (NoSuchElementException e) {
+
+        } finally {
+            return isBadgeDisplayed;
+        }
+    }
+
     public ArrayList<String> getProductNames() {
         ArrayList<String> productNames = new ArrayList<String>();
 
-       List<WebElement> items = getAllInventoryItemsDescription();
-       for(WebElement item: items) {
-           String productName = item.findElement(By.className("inventory_item_name")).getText();
-           productNames.add(productName);
-       }
+        List<WebElement> items = getAllInventoryItemsDescription();
+        for (WebElement item : items) {
+            String productName = item.findElement(By.className("inventory_item_name")).getText();
+            productNames.add(productName);
+        }
         return productNames;
     }
 
