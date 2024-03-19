@@ -78,6 +78,14 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(sortedProductNames, result);
     }
 
+    @Test
+    public void clickOnShoppingCartIcon() {
+        productsPage.clickOnTheShoppingCart();
+        String expectedUrl = "https://www.saucedemo.com/cart.html";
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals(expectedUrl, actualUrl);
+    }
+
     @DataProvider(name = "filterData")
         public Object[][] filterData() {
             // This method provides the test data
