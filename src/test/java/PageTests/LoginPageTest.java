@@ -1,19 +1,34 @@
 package PageTests;
 
 import base.BaseTest;
+import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 
+
 public class LoginPageTest extends BaseTest {
 
+    JSONObject jsonObject = readJSONFile(jsonFilePath);
     LoginPage loginPage;
    @BeforeMethod
    public void setTest() {
       loginPage = new LoginPage(driver);
    }
     @Test
+    public void LoginWithValidUserNameAndPasswordAndCheckPageTitle() {
+        Object validLoginInfo = jsonObject.get("validLogin");
+        loginPage.enterUserName("standard_user");
+        loginPage.enterPassword("password");
+        loginPage.clickLoginButton();
+        String expectedUrl = "https://www.saucedemo.com/inventory.html";
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals(actualUrl, expectedUrl);
+    }
+
+   /*
+   @Test
     public void LoginWithValidUserNameAndPasswordAndCheckPageTitle() {
        loginPage.enterUserName("standard_user");
        loginPage.enterPassword("secret_sauce");
@@ -22,7 +37,7 @@ public class LoginPageTest extends BaseTest {
        String actualUrl = driver.getCurrentUrl();
        Assert.assertEquals(actualUrl, expectedUrl);
     }
-
+*/
     @Test(enabled = true)
     public void LoginWithWrongUserNameAndValidPasswordAndCheckErrorMessage() {
         loginPage.enterUserName("wrong_user");

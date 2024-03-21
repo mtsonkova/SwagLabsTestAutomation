@@ -1,10 +1,9 @@
 package base;
 
-import Reporter.ExtentReporterNG;
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -18,25 +17,17 @@ import org.testng.annotations.*;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.Properties;
 
 public class BaseTest {
+
+    public String jsonFilePath = "src/test/utilities/testData.json";
     protected static WebDriver driver;
     private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws IOException {
         driver = initializeDriver();
-        /*
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
 
-        driver = new ChromeDriver(chromeOptions);
-        driver.manage().window().maximize();
-        String baseUrl = "https://www.saucedemo.com/";
-        driver.get(baseUrl);
-
-        */
     }
 
     public WebDriver initializeDriver() throws IOException {
@@ -69,6 +60,24 @@ public class BaseTest {
         driver.get(baseUrl);
 
         return driver;
+    }
+
+    public static JSONObject readJSONFile(String filePath) {
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object obj = parser.parse(new FileReader(filePath));
+
+            JSONObject jsonObject = (JSONObject) obj;
+            return jsonObject;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @AfterMethod
