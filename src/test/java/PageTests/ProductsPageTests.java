@@ -61,6 +61,14 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertTrue(isDisplayed);
     }
 
+    @Test
+    public void filterAllProductsByNameAToZ() {
+        productsPage.sortProductsByNameFromAtoZ();
+        ArrayList sortedProductNames = productsPage.getProductNames();
+        ArrayList<String> result = new ArrayList<String>(Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
+                "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)"));
+        Assert.assertEquals(sortedProductNames, result);
+    }
     @Test(dataProvider = "filterData")
     public void filterAllProductsByGivenCriteria(String criteria, List<String> result) {
         if(criteria.equalsIgnoreCase("Name (A to Z)")) {
