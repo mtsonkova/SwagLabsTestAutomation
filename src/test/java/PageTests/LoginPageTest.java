@@ -1,7 +1,6 @@
 package PageTests;
 
 import base.BaseTest;
-import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -10,7 +9,7 @@ import pageObjects.LoginPage;
 
 public class LoginPageTest extends BaseTest {
 
-    JSONObject jsonObject = readJSONFile(jsonFilePath);
+
     LoginPage loginPage;
    @BeforeMethod
    public void setTest() {
@@ -18,9 +17,8 @@ public class LoginPageTest extends BaseTest {
    }
     @Test
     public void LoginWithValidUserNameAndPasswordAndCheckPageTitle() {
-        Object validLoginInfo = jsonObject.get("validLogin");
         loginPage.enterUserName("standard_user");
-        loginPage.enterPassword("password");
+        loginPage.enterPassword("secret_sauce");
         loginPage.clickLoginButton();
         String expectedUrl = "https://www.saucedemo.com/inventory.html";
         String actualUrl = driver.getCurrentUrl();

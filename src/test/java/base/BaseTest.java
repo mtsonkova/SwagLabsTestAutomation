@@ -1,6 +1,7 @@
 package base;
 
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,7 +22,7 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    public String jsonFilePath = "src/test/utilities/testData.json";
+    //public String jsonFilePath = "src/test/utilities/sortOptions.json";
     protected static WebDriver driver;
     private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     @BeforeMethod(alwaysRun = true)
@@ -79,6 +80,7 @@ public class BaseTest {
             throw new RuntimeException(e);
         }
     }
+
 
     @AfterMethod
     public void tearDown() {
