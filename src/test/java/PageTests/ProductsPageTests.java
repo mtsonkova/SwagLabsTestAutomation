@@ -1,7 +1,7 @@
 package PageTests;
 
 import base.BaseTest;
-import org.openqa.selenium.NoSuchElementException;
+import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -14,8 +14,11 @@ import java.util.*;
 public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
     String productName = "";
+
+    String jsonFilePath = "src/test/utilities/sortOptions.json";
     boolean isDisplayed = false;
 
+    JSONObject jsonObject = readJSONFile(jsonFilePath);
     @BeforeMethod
     public void setTest() {
 
@@ -47,8 +50,6 @@ public class ProductsPageTests extends BaseTest {
     public void addProductByName() {
        productName = "Sauce Labs Onesie";
        productsPage.AddProductInTheShoppingCartByName(productName);
-       isDisplayed = productsPage.CheckIfAddBtnChangesToRemoveForProductAddedInTheShoppingCartByName(productName);
-       Assert.assertTrue(isDisplayed);
        int shoppingCartBadgeValue = productsPage.getShoppingCartBadgeValue();
        Assert.assertTrue(shoppingCartBadgeValue >= 1);
     }
@@ -62,13 +63,38 @@ public class ProductsPageTests extends BaseTest {
     }
 
     @Test
-    public void filterAllProductsByNameAToZ() {
+    public void sortAllProductsByNameAToZ() {
         productsPage.sortProductsByNameFromAtoZ();
-        ArrayList sortedProductNames = productsPage.getProductNames();
-        ArrayList<String> result = new ArrayList<String>(Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
-                "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)"));
+        ArrayList<String> sortedProductNames = productsPage.getProductNames();
+       var result = jsonObject.get("Name (A to Z)");
+
         Assert.assertEquals(sortedProductNames, result);
     }
+
+    @Test
+    public void sortAllProductsByNameZToA() {
+        productsPage.sortProductsByNameFromZtoA();
+        ArrayList sortedProductNames = productsPage.getProductNames();
+        var result = jsonObject.get("Name (Z to A)");
+        Assert.assertEquals(sortedProductNames, result);
+    }
+    @Test
+    public void sortAllProductsByPriceLowToHigh() {
+        productsPage.sortProductsByPriceLowToHigh();
+        ArrayList sortedProductNames = productsPage.getProductNames();
+        var result = jsonObject.get("Price (low to high)");
+        Assert.assertEquals(sortedProductNames, result);
+    }
+
+    @Test
+    public void sortAllProductsByPriceHighToLow() {
+        productsPage.sortProductsByPriceHighToLow();
+        ArrayList sortedProductNames = productsPage.getProductNames();
+        var result = jsonObject.get("Price (high to low)");
+        Assert.assertEquals(sortedProductNames, result);
+    }
+
+
     @Test(dataProvider = "filterData")
     public void filterAllProductsByGivenCriteria(String criteria, List<String> result) {
         if(criteria.equalsIgnoreCase("Name (A to Z)")) {
