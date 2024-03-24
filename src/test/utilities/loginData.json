@@ -1,0 +1,13 @@
+{
+  "validUserName" : "standard_user",
+  "validPassword" : "secret_sauce",
+  "productsPageUrl" : "https://www.saucedemo.com/inventory.html",
+  "lockedOutUser" : "locked_out_user",
+  "errMsgLockedOutUser" : "Epic sadface: Sorry, this user has been locked out.",
+  "emptyUserName" : "",
+  "errMsgEmptyUserName" : "Epic sadface: Username is required",
+  "emptyPassword" : "",
+  "errMsgEmptyPassword" : "Epic sadface: Password is required",
+  "wrongUserName" : "wrongUser",
+  "errMsgWrongUserName" : "Epic sadface: Username and password do not match any user in this service"
+}
