@@ -1,6 +1,7 @@
 package PageTests;
 
 import base.BaseTest;
+import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,68 +12,58 @@ public class LoginPageTest extends BaseTest {
 
 
     LoginPage loginPage;
+    JSONObject jsonObject = readJSONFile("src/test/utilities/testData.json");
    @BeforeMethod
    public void setTest() {
       loginPage = new LoginPage(driver);
    }
     @Test
     public void LoginWithValidUserNameAndPasswordAndCheckPageTitle() {
-        loginPage.enterUserName("standard_user");
-        loginPage.enterPassword("secret_sauce");
+        loginPage.enterUserName(jsonObject.get("validUserName").toString());
+        loginPage.enterPassword(jsonObject.get("validPassword").toString());
         loginPage.clickLoginButton();
-        String expectedUrl = "https://www.saucedemo.com/inventory.html";
+        String expectedUrl = jsonObject.get("productsPageUrl").toString();
         String actualUrl = driver.getCurrentUrl();
         Assert.assertEquals(actualUrl, expectedUrl);
     }
 
-   /*
-   @Test
-    public void LoginWithValidUserNameAndPasswordAndCheckPageTitle() {
-       loginPage.enterUserName("standard_user");
-       loginPage.enterPassword("secret_sauce");
-       loginPage.clickLoginButton();
-       String expectedUrl = "https://www.saucedemo.com/inventory.html";
-       String actualUrl = driver.getCurrentUrl();
-       Assert.assertEquals(actualUrl, expectedUrl);
-    }
-*/
+
     @Test(enabled = true)
     public void LoginWithWrongUserNameAndValidPasswordAndCheckErrorMessage() {
-        loginPage.enterUserName("wrong_user");
-        loginPage.enterPassword("secret_sauce");
+        loginPage.enterUserName(jsonObject.get("wrongUserName").toString());
+        loginPage.enterPassword(jsonObject.get("validPassword").toString());
         loginPage.clickLoginButton();
-        String expectedError = "Epic sadface: Username and password do not match any user in this service";
+        String expectedError = jsonObject.get("errMsgWrongUserName").toString();
         String actualError = loginPage.getErrorMessage();
         Assert.assertEquals(actualError, expectedError);
     }
 
     @Test
     public void LoginWithLockedOutUserAndValidPasswordAndCheckErrorMessage() {
-        loginPage.enterUserName("locked_out_user");
-        loginPage.enterPassword("secret_sauce");
+        loginPage.enterUserName(jsonObject.get("lockedOutUser").toString());
+        loginPage.enterPassword(jsonObject.get("validPassword").toString());
         loginPage.clickLoginButton();
-        String expectedError = "Epic sadface: Sorry, this user has been locked out.";
+        String expectedError = jsonObject.get("errMsgLockedOutUser").toString();
         String actualError = loginPage.getErrorMessage();
         Assert.assertEquals(actualError, expectedError);
     }
 
     @Test
     public void LoginWithEmptyUserNameAndValidPasswordAndCheckErrorMessage(){
-        loginPage.enterUserName("");
-        loginPage.enterPassword("secret_sauce");
+        loginPage.enterUserName(jsonObject.get("emptyUserName").toString());
+        loginPage.enterPassword(jsonObject.get("validPassword").toString());
         loginPage.clickLoginButton();
-        String expectedError = "Epic sadface: Username is required";
+        String expectedError = jsonObject.get("errMsgEmptyUserName").toString();
         String actualError = loginPage.getErrorMessage();
         Assert.assertEquals(actualError, expectedError);
     }
     @Test
     public void LoginWithValidUserNameAndEmptyPasswordAndCheckErrorMessage(){
-        loginPage.enterUserName("standard_user");
-        loginPage.enterPassword("");
+        loginPage.enterUserName(jsonObject.get("validUserName").toString());
+        loginPage.enterPassword(jsonObject.get("emptyPassword").toString());
         loginPage.clickLoginButton();
-        String expectedError = "Epic sadface: Password is required";
+        String expectedError = jsonObject.get("errMsgEmptyPassword").toString();
         String actualError = loginPage.getErrorMessage();
         Assert.assertEquals(actualError, expectedError);
     }
-
 }

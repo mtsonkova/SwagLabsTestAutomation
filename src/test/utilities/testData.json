@@ -9,5 +9,8 @@
   "emptyPassword" : "",
   "errMsgEmptyPassword" : "Epic sadface: Password is required",
   "wrongUserName" : "wrongUser",
-  "errMsgWrongUserName" : "Epic sadface: Username and password do not match any user in this service"
+  "errMsgWrongUserName" : "Epic sadface: Username and password do not match any user in this service",
+  "firstName" : "Alicia",
+  "lastName" : "Keyes",
+  "postalCode" : "3456"
 }
