@@ -58,7 +58,7 @@ public class ProductsPageTests extends BaseTest {
     public void removeProductByName() {
         productName = "Sauce Labs Onesie";
         productsPage.RemoveProductFromTheShoppingCartByName(productName);
-        isDisplayed = productsPage.CheckIfRemoveBtnChangesToAddForProductRemovedFromTheShoppingCartByName(productName);
+        isDisplayed = productsPage.CheckIfRemoveBtnChangesToAddForProductRemovedFromCart(productName);
         Assert.assertTrue(isDisplayed);
     }
 
