@@ -115,25 +115,34 @@ public class ProductsPage {
             String itemName = item.findElement(By.className("inventory_item_name")).getText();
 
             if (itemName.equalsIgnoreCase(productName)) {
-                isRemoveBtnDisplayed = btnRemove.isDisplayed();
-                break;
+                String inventoryBtnText = item.findElement(By.className("btn_inventory")).getText();
+
+                if (inventoryBtnText.equals("Remove")) {
+                    isRemoveBtnDisplayed = true;
+                    break;
+                }
             }
         }
         return isRemoveBtnDisplayed;
     }
 
     public boolean CheckIfRemoveBtnChangesToAddForProductRemovedFromCart(String productName) {
-       boolean isAddBtnDisplayed = false;
+        boolean isAddBtnDisplayed = false;
         for (WebElement item : inventoryItemsDescription) {
             String itemName = item.findElement(By.className("inventory_item_name")).getText();
 
             if (itemName.equalsIgnoreCase(productName)) {
-                isAddBtnDisplayed = btnAdd.isDisplayed();
-                break;
+                String inventoryBtnText = item.findElement(By.className("btn_inventory")).getText();
+
+                if (inventoryBtnText.equals("Add to cart")) {
+                    isAddBtnDisplayed = true;
+                    break;
+                }
             }
         }
         return isAddBtnDisplayed;
     }
+
 
     public void RemoveProductFromTheShoppingCartByName(String productName) {
         for (WebElement item : inventoryItemsDescription) {
