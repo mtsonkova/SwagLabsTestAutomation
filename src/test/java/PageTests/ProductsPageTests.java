@@ -1,6 +1,7 @@
 package PageTests;
 
 import base.BaseTest;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -15,7 +16,7 @@ public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
     String productName = "";
 
-    String jsonFilePath = "src/test/utilities/sortOptions.json";
+    String jsonFilePath = "src/test/utilities/testData.json";
     boolean isDisplayed = false;
 
     JSONObject jsonObject = readJSONFile(jsonFilePath);
@@ -120,26 +121,24 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(expectedUrl, actualUrl);
     }
 
-    @DataProvider(name = "filterData")
-        public Object[][] filterData() {
+    @Test(dataProvider = "purchasedProducts")
+    public void addRandomProductsUInCart() {
+        productsPage.getProductsPageTitle();
+
+    }
+    @DataProvider(name = "purchasedProducts")
+        public Object[][] purchasedProdcts() {
+        JSONArray products = (JSONArray) jsonObject.get("purchasedProducts");
+        List<Object> items = Arrays.stream(products.toArray()).toList();
+        items.size();
+
+        Iterator it = products.iterator();
+
+        while (it.hasNext()) {
+
+        }
             // This method provides the test data
-            return new Object[][] {
-                    {"Name (A to Z)",
-                            Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
-                            "Sauce Labs Fleece Jacket", "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)")
-                    },
-                    {"Name (Z to A)",
-                            Arrays.asList("Test.allTheThings() T-Shirt (Red)", "Sauce Labs Onesie", "Sauce Labs Fleece Jacket",
-                                    "Sauce Labs Bolt T-Shirt", "Sauce Labs Bike Light", "Sauce Labs Backpack")
-                    },
-                    {"Price (low to high)",
-                            Arrays.asList("Sauce Labs Onesie", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt",
-                                    "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Backpack", "Sauce Labs Fleece Jacket")
-                    },
-                    {"Price (high to low)",
-                            Arrays.asList("Sauce Labs Fleece Jacket", "Sauce Labs Backpack", "Sauce Labs Bolt T-Shirt",
-                                    "Test.allTheThings() T-Shirt (Red)", "Sauce Labs Bike Light", "Sauce Labs Onesie")
-                    }
+            return new Object[][]{
             };
     }
 

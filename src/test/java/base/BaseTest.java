@@ -1,6 +1,8 @@
 package base;
 
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -22,7 +24,7 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    //public String jsonFilePath = "src/test/utilities/sortOptions.json";
+    //public String jsonFilePath = "src/test/utilities/purchasedProducts.json";
     protected static WebDriver driver;
     private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     @BeforeMethod(alwaysRun = true)
@@ -80,6 +82,7 @@ public class BaseTest {
             throw new RuntimeException(e);
         }
     }
+
 
 
     @AfterMethod
