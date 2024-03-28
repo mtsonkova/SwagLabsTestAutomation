@@ -44,25 +44,6 @@
     "Test.allTheThings() T-Shirt (Red)",
     "Sauce Labs Bike Light",
     "Sauce Labs Onesie"
-  ],
-  "purchasedProducts": [
-  {
-    "products": [
-      "Sauce Labs Backpack",
-      "Sauce Labs Bike Light",
-      "Sauce Labs Bolt T-Shirt"
-    ]
-  },
-  {
-    "products": [
-      "Sauce Labs Onesie"
-    ]
-  },
-  {
-    "products": [
-      "Sauce Labs Fleece Jacket",
-      "Sauce Labs Backpack"
-    ]
-  }
-]
+  ]
+
 }

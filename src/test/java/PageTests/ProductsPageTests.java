@@ -121,26 +121,6 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(expectedUrl, actualUrl);
     }
 
-    @Test(dataProvider = "purchasedProducts")
-    public void addRandomProductsUInCart() {
-        productsPage.getProductsPageTitle();
-
-    }
-    @DataProvider(name = "purchasedProducts")
-        public Object[][] purchasedProdcts() {
-        JSONArray products = (JSONArray) jsonObject.get("purchasedProducts");
-        List<Object> items = Arrays.stream(products.toArray()).toList();
-        items.size();
-
-        Iterator it = products.iterator();
-
-        while (it.hasNext()) {
-
-        }
-            // This method provides the test data
-            return new Object[][]{
-            };
-    }
 
 
 
