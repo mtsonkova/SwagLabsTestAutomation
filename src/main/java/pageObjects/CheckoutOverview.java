@@ -11,5 +11,5 @@ public class CheckoutOverview {
         PageFactory.initElements(driver, this);
     }
 
-    
+
 }
