@@ -8,10 +8,10 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class CheckoutOverview {
+public class CheckoutOverviewPage {
     private WebDriver driver;
 
-    public CheckoutOverview(WebDriver driver) {
+    public CheckoutOverviewPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

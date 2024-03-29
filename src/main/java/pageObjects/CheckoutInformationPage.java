@@ -5,10 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class CheckoutInformation {
+public class CheckoutInformationPage {
     private WebDriver driver;
 
-    public CheckoutInformation(WebDriver driver) {
+    public CheckoutInformationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
