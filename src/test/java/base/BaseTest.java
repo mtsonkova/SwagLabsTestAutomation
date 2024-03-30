@@ -24,9 +24,12 @@ import java.util.Properties;
 
 public class BaseTest {
 
-    //public String jsonFilePath = "src/test/utilities/purchasedProducts.json";
+
     protected static WebDriver driver;
     private static ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
+
+    public String jsonFilePath = "src/test/utilities/testData.json";
+    JSONObject jsonObject = readJSONFile(jsonFilePath);
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws IOException {
         driver = initializeDriver();
@@ -83,8 +86,23 @@ public class BaseTest {
         }
     }
 
+    public static JSONArray readJSONFileArrays(String filePath) {
+        JSONParser parser = new JSONParser();
 
+        try {
+            Object arr = parser.parse(new FileReader(filePath));
 
+            JSONArray jsonArray = (JSONArray) arr;
+            return jsonArray;
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @AfterMethod
     public void tearDown() {
         driver.quit();
@@ -98,6 +116,28 @@ public class BaseTest {
         File file = new File(destPath);
         Files.copy(source.toPath(), file.toPath());
         return file;
+    }
+
+    @DataProvider(name = "products")
+    public Object[][] productsDataProvider() {
+        Object value = null;
+        var result = (JSONArray) jsonObject.get("purchasedProducts");
+        Object[][] data = new Object[result.size()][1];
+        for (int i = 0; i < result.size(); i++) {
+            // Get the JSON object at index i
+            JSONObject jsonObj = (JSONObject) result.get(i);
+            //get the values of the jsonObj
+
+            value = jsonObj.get("products").toString();
+            data[i][0] = value;
+
+        }
+        System.out.println(data);
+        return data;
+    }
+
+    public JSONObject getJsonObject() {
+        return jsonObject;
     }
 
 

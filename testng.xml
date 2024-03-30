@@ -6,7 +6,7 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="D:/Projects/SwagLabsTestAutomation">
         <classes>
-            <class name="PageTests.LoginPageTest"></class>
+            <class name="PageTests.LoginPageTests"></class>
             <class name ="PageTests.ProductsPageTests"></class>
             <class name="PageTests.E2ETests"></class>
         </classes>

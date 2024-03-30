@@ -15,11 +15,9 @@ import java.util.*;
 public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
     String productName = "";
-
-    String jsonFilePath = "src/test/utilities/testData.json";
     boolean isDisplayed = false;
+   JSONObject jsonObject = getJsonObject();
 
-    JSONObject jsonObject = readJSONFile(jsonFilePath);
     @BeforeMethod
     public void setTest() {
 
@@ -42,17 +40,17 @@ public class ProductsPageTests extends BaseTest {
 
     @Test(dependsOnMethods = "addAllProductsInTheShoppingCart")
     public void removeAllProductsFromTheShoppingCart_AllAvalilableProductsAddedToCart() {
-       productsPage.RemoveAllProductsFromTheShoppingCart();
-      boolean isBadgeDisplayed =  productsPage.checkIfShoppingCartBadgeIsDisplayed();
-      Assert.assertFalse(isBadgeDisplayed);
+        productsPage.RemoveAllProductsFromTheShoppingCart();
+        boolean isBadgeDisplayed = productsPage.checkIfShoppingCartBadgeIsDisplayed();
+        Assert.assertFalse(isBadgeDisplayed);
     }
 
     @Test
     public void addProductByName() {
-       productName = "Sauce Labs Onesie";
-       productsPage.AddProductInTheShoppingCartByName(productName);
-       int shoppingCartBadgeValue = productsPage.getShoppingCartBadgeValue();
-       Assert.assertTrue(shoppingCartBadgeValue >= 1);
+        productName = "Sauce Labs Onesie";
+        productsPage.AddProductInTheShoppingCartByName(productName);
+        int shoppingCartBadgeValue = productsPage.getShoppingCartBadgeValue();
+        Assert.assertTrue(shoppingCartBadgeValue >= 1);
     }
 
     @Test(dependsOnMethods = "addProductByName")
@@ -67,7 +65,7 @@ public class ProductsPageTests extends BaseTest {
     public void sortAllProductsByNameAToZ() {
         productsPage.sortProductsByNameFromAtoZ();
         ArrayList<String> sortedProductNames = productsPage.getProductNames();
-       var result = jsonObject.get("Name (A to Z)");
+        var result = jsonObject.get("Name (A to Z)");
 
         Assert.assertEquals(sortedProductNames, result);
     }
@@ -79,6 +77,7 @@ public class ProductsPageTests extends BaseTest {
         var result = jsonObject.get("Name (Z to A)");
         Assert.assertEquals(sortedProductNames, result);
     }
+
     @Test
     public void sortAllProductsByPriceLowToHigh() {
         productsPage.sortProductsByPriceLowToHigh();
@@ -95,24 +94,6 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(sortedProductNames, result);
     }
 
-
-    @Test(dataProvider = "filterData")
-    public void filterAllProductsByGivenCriteria(String criteria, List<String> result) {
-        if(criteria.equalsIgnoreCase("Name (A to Z)")) {
-            productsPage.sortProductsByNameFromAtoZ();
-        } else if(criteria.equalsIgnoreCase("Name (Z to A)")) {
-            productsPage.sortProductsByNameFromZtoA();
-        } else if(criteria.equalsIgnoreCase("Price (low to high)")) {
-            productsPage.sortProductsByPriceLowToHigh();
-        } else if(criteria.equalsIgnoreCase("Price (high to low)")) {
-            productsPage.sortProductsByPriceHighToLow();
-        }
-
-        ArrayList sortedProductNames = productsPage.getProductNames();
-        Arrays.stream(result.toArray()).toList();
-        Assert.assertEquals(sortedProductNames, result);
-    }
-
     @Test
     public void clickOnShoppingCartIcon() {
         productsPage.clickOnTheShoppingCart();
@@ -121,8 +102,8 @@ public class ProductsPageTests extends BaseTest {
         Assert.assertEquals(expectedUrl, actualUrl);
     }
 
-
-
-
-
+    @Test(dataProvider = "products")
+    public void purchaseMultipleProducts(String[] products) {
+        productsPage.getProductsPageTitle();
     }
+}

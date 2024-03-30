@@ -8,11 +8,11 @@ import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 
 
-public class LoginPageTest extends BaseTest {
+public class LoginPageTests extends BaseTest {
 
 
     LoginPage loginPage;
-    JSONObject jsonObject = readJSONFile("src/test/utilities/testData.json");
+    JSONObject jsonObject = getJsonObject();
    @BeforeMethod
    public void setTest() {
       loginPage = new LoginPage(driver);
