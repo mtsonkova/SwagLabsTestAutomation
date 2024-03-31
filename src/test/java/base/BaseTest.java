@@ -1,8 +1,6 @@
 package base;
 
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,6 +18,8 @@ import org.testng.annotations.*;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class BaseTest {
@@ -46,7 +46,7 @@ public class BaseTest {
 
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            //chromeOptions.addArguments("--headless");
 
             driver = new ChromeDriver(chromeOptions);
         } else if (browser.equalsIgnoreCase("firefox")) {
@@ -128,11 +128,14 @@ public class BaseTest {
             JSONObject jsonObj = (JSONObject) result.get(i);
             //get the values of the jsonObj
 
-            value = jsonObj.get("products").toString();
-            data[i][0] = value;
+           value = jsonObj.get("products");
 
+
+            //put JSONArray values in Java ArrayList
+
+            data[i][0] = value;
         }
-        System.out.println(data);
+
         return data;
     }
 

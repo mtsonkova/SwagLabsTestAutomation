@@ -5,7 +5,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pageObjects.LoginPage;
 import pageObjects.ProductsPage;
@@ -103,7 +102,11 @@ public class ProductsPageTests extends BaseTest {
     }
 
     @Test(dataProvider = "products")
-    public void purchaseMultipleProducts(String[] products) {
-        productsPage.getProductsPageTitle();
+    public void purchaseMultipleProducts(JSONArray products) {
+
+        productsPage.purchaseMultipleProducts(products);
+        int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
+        int purchasedProducts = products.size();
+        Assert.assertEquals(cartBadgeValue, purchasedProducts);
     }
 }

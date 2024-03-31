@@ -1,5 +1,6 @@
 package pageObjects;
 
+import org.json.simple.JSONArray;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -154,6 +155,24 @@ public class ProductsPage {
             }
         }
     }
+
+
+    public void purchaseMultipleProducts(JSONArray products) {
+        for (int i = 0; i < products.size(); i++) {
+            var current = products.get(i);
+            for (WebElement item : inventoryItemsDescription) {
+                String itemName = item.findElement(By.className("inventory_item_name")).getText();
+
+                if (itemName.equalsIgnoreCase(current.toString())) {
+                    clickOnAddBtn(item);
+                    break;
+                }
+            }
+        }
+
+
+    }
+
 
     public void clickOnTheShoppingCart() {
         shoppingCart.click();
