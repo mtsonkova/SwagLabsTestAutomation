@@ -15,7 +15,7 @@ public class ProductsPageTests extends BaseTest {
     private ProductsPage productsPage;
     String productName = "";
     boolean isDisplayed = false;
-   JSONObject jsonObject = getJsonObject();
+    JSONObject jsonObject = getJsonObject();
 
     @BeforeMethod
     public void setTest() {
@@ -104,6 +104,15 @@ public class ProductsPageTests extends BaseTest {
     @Test(dataProvider = "products")
     public void purchaseMultipleProducts(JSONArray products) {
 
+        productsPage.purchaseMultipleProducts(products);
+        int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
+        int purchasedProducts = products.size();
+        Assert.assertEquals(cartBadgeValue, purchasedProducts);
+    }
+
+    @Test
+    public void purchaseMultipleProductsFromShoppingList() {
+        var products = (JSONArray) jsonObject.get("purchasedProductsList");
         productsPage.purchaseMultipleProducts(products);
         int cartBadgeValue = productsPage.getShoppingCartBadgeValue();
         int purchasedProducts = products.size();

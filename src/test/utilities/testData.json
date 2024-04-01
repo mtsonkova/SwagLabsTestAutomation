@@ -45,17 +45,30 @@
     "Sauce Labs Bike Light",
     "Sauce Labs Onesie"
   ],
-
-  "purchasedProducts" : [
+  "purchasedProducts": [
     {
-      "products": ["Sauce Labs Fleece Jacket"]
+      "products": [
+        "Sauce Labs Fleece Jacket"
+      ]
     },
     {
-      "products": ["Sauce Labs Bike Light","Sauce Labs Onesie"]
+      "products": [
+        "Sauce Labs Bike Light",
+        "Sauce Labs Onesie"
+      ]
     },
     {
-      "products": ["Sauce Labs Onesie", "Sauce Labs Fleece Jacket", "Sauce Labs Bike Light"]
+      "products": [
+        "Sauce Labs Onesie",
+        "Sauce Labs Fleece Jacket",
+        "Sauce Labs Bike Light"
+      ]
     }
+  ],
+  "purchasedProductsList": [
+    "Sauce Labs Bolt T-Shirt",
+    "Test.allTheThings() T-Shirt (Red)",
+    "Sauce Labs Bike Light",
+    "Sauce Labs Onesie"
   ]
-
 }

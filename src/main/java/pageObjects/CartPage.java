@@ -43,4 +43,10 @@ public class CartPage {
     public void clickOnRemoveBtn(WebElement element) {
         element.findElement(By.tagName("button")).click();
     }
+
+    public List<WebElement> getAllProductsFromCart() {
+        return productsInCart;
+    }
+
+
 }

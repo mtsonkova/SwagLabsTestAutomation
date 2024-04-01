@@ -169,13 +169,11 @@ public class ProductsPage {
                 }
             }
         }
-
-
     }
 
-
-    public void clickOnTheShoppingCart() {
+    public CartPage clickOnTheShoppingCart() {
         shoppingCart.click();
+        return new CartPage(driver);
     }
 
     public int getShoppingCartBadgeValue() {
