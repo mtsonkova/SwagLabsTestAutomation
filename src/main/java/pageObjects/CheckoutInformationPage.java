@@ -56,8 +56,9 @@ public class CheckoutInformationPage {
         btnCancel.click();
     }
 
-    public void clickOnContinueBtn() {
+    public CheckoutOverviewPage clickOnContinueBtn() {
         btnContinue.click();
+        return new CheckoutOverviewPage(driver);
     }
 
     public String getErrMsgText() {
