@@ -22,7 +22,7 @@ public class CheckoutInformationPage {
     @FindBy(id = "postal-code")
     WebElement postalCodePlaceholder;
 
-    @FindBy(css = "div#error-message-container h3")
+    @FindBy(css = "div.error-message-container h3")
     WebElement errorMsgContainer;
 
     @FindBy(id = "cancel")
@@ -56,8 +56,9 @@ public class CheckoutInformationPage {
         btnCancel.click();
     }
 
-    public void clickOnContinueBtn() {
+    public CheckoutOverviewPage clickOnContinueBtn() {
         btnContinue.click();
+        return new CheckoutOverviewPage(driver);
     }
 
     public String getErrMsgText() {
