@@ -19,7 +19,7 @@ public class CartPage {
     @FindBy(className = "title")
     WebElement cartPageTitle;
 
-    @FindBy(className = "cart_item_label")
+    @FindBy(className = "cart_item")
     List<WebElement> productsInCart;
 
     @FindBy(id = "checkout")
@@ -28,6 +28,8 @@ public class CartPage {
     @FindBy(id = "continue-shopping")
     WebElement btnContinueShopping;
 
+    @FindBy(className = "cart_button")
+    WebElement btnRemove;
     public String getCartPageTitle() {
         return cartPageTitle.getText();
     }
@@ -36,12 +38,18 @@ public class CartPage {
         btnContinueShopping.click();
     }
 
-    public void clickOnCheckoutBtn() {
+    public CheckoutInformationPage clickOnCheckoutBtn() {
         btnCheckout.click();
+        return new CheckoutInformationPage(driver);
     }
 
     public void clickOnRemoveBtn(WebElement element) {
-        element.findElement(By.tagName("button")).click();
+        //element.findElement(By.tagName("button")).click();
+        btnRemove.click();
+    }
+
+    public WebElement getBtnRemove() {
+        return btnRemove;
     }
 
     public List<WebElement> getAllProductsFromCart() {

@@ -31,7 +31,9 @@ public class CheckoutInformationPage {
     @FindBy(id = "continue")
     WebElement btnContinue;
 
+    /*
     public void enterFirstName(String firstName) {
+
         firstNamePlaceholder.sendKeys(firstName);
     }
 
@@ -40,6 +42,13 @@ public class CheckoutInformationPage {
     }
 
     public void enterPostCode(String postCode) {
+        postalCodePlaceholder.sendKeys(postCode);
+    }
+    */
+
+    public void enterInformationData(String firstName, String lastName, String postCode) {
+        firstNamePlaceholder.sendKeys(firstName);
+        lastNamePlaceholder.sendKeys(lastName);
         postalCodePlaceholder.sendKeys(postCode);
     }
 

@@ -1,14 +1,14 @@
 package PageTests;
 
 import base.BaseTest;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pageObjects.CartPage;
-import pageObjects.LoginPage;
-import pageObjects.ProductsPage;
+import pageObjects.*;
 
 import java.util.List;
 
@@ -17,13 +17,15 @@ public class CartPageTests extends BaseTest {
     private ProductsPage productsPage;
 
     private JSONObject jsonObject = getJsonObject();
-    private String productName = "Sauce Labs Fleece Jacket";
+    JSONArray products = (JSONArray) jsonObject.get("purchasedProductsList");
+
 
     @BeforeMethod
     public void setTest() {
 
         LoginPage loginPage = new LoginPage(driver);
-        productsPage.AddProductInTheShoppingCartByName(productName);
+        productsPage = loginPage.validLogin();
+        productsPage.purchaseMultipleProducts(products);
         cartPage = productsPage.clickOnTheShoppingCart();
     }
 
@@ -35,17 +37,24 @@ public class CartPageTests extends BaseTest {
         Assert.assertEquals(currentUrl, expectedUrl);
     }
 
-    @Test(dependsOnMethods = "purchaseMultipleProductsFromShoppingList")
+    @Test
     public void removeProductfromTheShoppingCart() {
         List<WebElement> cartProducts = cartPage.getAllProductsFromCart();
         int size = cartProducts.size();
         WebElement currentProduct = cartProducts.get(0);
-        cartPage.clickOnRemoveBtn(currentProduct);
+        WebElement btnRemove = currentProduct.findElement(By.className("cart_button"));
+        btnRemove.click();
+
         int currentSize = size - 1;
         Assert.assertEquals(cartProducts.size(), currentSize);
-
-
     }
 
+    @Test
+    public void clickOnCheckoutButton(){
+       CheckoutInformationPage checkoutInformationPage =  cartPage.clickOnCheckoutBtn();
+       String expectedURL = "https://www.saucedemo.com/checkout-step-one.html";
+       String actualUrl = driver.getCurrentUrl();
+       Assert.assertEquals(actualUrl, expectedURL);
+    }
 }
 
