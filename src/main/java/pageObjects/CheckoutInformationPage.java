@@ -22,7 +22,7 @@ public class CheckoutInformationPage {
     @FindBy(id = "postal-code")
     WebElement postalCodePlaceholder;
 
-    @FindBy(css = "div#error-message-container h3")
+    @FindBy(css = "div.error-message-container h3")
     WebElement errorMsgContainer;
 
     @FindBy(id = "cancel")

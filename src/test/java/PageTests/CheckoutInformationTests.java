@@ -43,8 +43,7 @@ public class CheckoutInformationTests extends BaseTest {
 
     @Test
     public void provideEmptyFirstNameAndCheckErrorMsg() {
-        firstName = "";
-        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        checkoutInformationPage.enterInformationData("", lastName, postCode);
         CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
         actualErrMsg = checkoutInformationPage.getErrMsgText();
         expectedErrMsg = "Error: First Name is required";
@@ -53,8 +52,7 @@ public class CheckoutInformationTests extends BaseTest {
 
     @Test
     public void provideEmptyLastNameAndCheckErrorMsg() {
-        lastName = "";
-        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        checkoutInformationPage.enterInformationData(firstName, "", postCode);
         CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
         actualErrMsg = checkoutInformationPage.getErrMsgText();
         expectedErrMsg = "Error: Last Name is required";
@@ -63,8 +61,8 @@ public class CheckoutInformationTests extends BaseTest {
 
     @Test
     public void provideEmptyPostCodeAndCheckErrorMsg() {
-        postCode = "";
-        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+
+        checkoutInformationPage.enterInformationData(firstName, lastName,"");
         CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
         actualErrMsg = checkoutInformationPage.getErrMsgText();
         expectedErrMsg = "Error: Postal Code is required";
