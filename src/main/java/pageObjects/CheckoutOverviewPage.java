@@ -41,6 +41,10 @@ public class CheckoutOverviewPage {
     public List<WebElement> getPurchasedProductsList() {
         return purchasedProductsList;
     }
+
+    public int getPurchasedProductsListSize() {
+        return purchasedProductsList.size();
+    }
     public String getPaymentInformation() {
         WebElement element = orderInfoSummaryElements.get(0).findElement(By.className("summary_value_label"));
         return element.getText();

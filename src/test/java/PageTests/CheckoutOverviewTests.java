@@ -3,6 +3,7 @@ package PageTests;
 import base.BaseTest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -31,8 +32,8 @@ public class CheckoutOverviewTests extends BaseTest {
 
     @Test
     public void CheckThatProductsArePresentInTheOverviewPage() {
-        List<WebElement> products = checkoutOverviewPage.getPurchasedProductsList();
-        Assert.assertFalse(products.isEmpty());
+       int productsSize = checkoutOverviewPage.getPurchasedProductsListSize();
+        Assert.assertTrue(productsSize > 0);
     }
 
     @Test
@@ -49,5 +50,19 @@ public class CheckoutOverviewTests extends BaseTest {
         Assert.assertEquals(shippingInformation, "Free Pony Express Delivery!");
     }
 
+    @Test
+    public void CheckThatItemTotalPriceIsEqualToTheSumOFAllPurchasedProducts() {
+        List<WebElement> products = checkoutOverviewPage.getPurchasedProductsList();
+        double productsPrice = 0;
+        for(WebElement item : products)  {
+            String[] priceString = item.findElement(By.className("inventory_item_price")).toString().split("$");
+           double price = Integer.parseInt(priceString[0]);
+           productsPrice += price;
+        };
+
+        double expectedPrice = checkoutOverviewPage.getItemTotal();
+
+        Assert.assertEquals(productsPrice, expectedPrice);
+    }
 
 }
