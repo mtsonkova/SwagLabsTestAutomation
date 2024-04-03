@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+
 import java.util.List;
 
 public class CheckoutOverviewPage {
@@ -16,7 +17,7 @@ public class CheckoutOverviewPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(className = "cart_list")
+    @FindBy(className = "cart_item_label")
     List<WebElement> purchasedProductsList;
 
     @FindBy(className = "summary_info_label")
@@ -37,6 +38,13 @@ public class CheckoutOverviewPage {
     @FindBy(id = "finish")
     WebElement btnFinish;
 
+    public List<WebElement> getPurchasedProductsList() {
+        return purchasedProductsList;
+    }
+
+    public int getPurchasedProductsListSize() {
+        return purchasedProductsList.size();
+    }
     public String getPaymentInformation() {
         WebElement element = orderInfoSummaryElements.get(0).findElement(By.className("summary_value_label"));
         return element.getText();
