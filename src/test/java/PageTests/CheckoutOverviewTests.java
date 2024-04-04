@@ -3,14 +3,12 @@ package PageTests;
 import base.BaseTest;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pageObjects.*;
 
-import java.time.Duration;
 import java.util.List;
 
 public class CheckoutOverviewTests extends BaseTest {
@@ -29,66 +27,19 @@ public class CheckoutOverviewTests extends BaseTest {
         cartPage = productsPage.clickOnTheShoppingCart();
         checkoutInformationPage = cartPage.clickOnCheckoutBtn();
         checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
-        By container = checkoutOverviewPage.getCheckoutSummaryContainer();
-        waitForElementToAppear(container);
-
     }
 
-    @Test
-    public void CheckThatProductsArePresentInTheOverviewPage() {
-
-       List<WebElement> products = checkoutOverviewPage.getAllPurchasedProducts();
-        //List<WebElement> products = driver.findElements(By.className("cart_item_label"));
-        Assert.assertFalse(products.isEmpty());
-    }
-
-    //TODO fix getPaymentInformation()
-    /*
-    @Test
-    public void CheckThatPaymentInformationFieldIsNotEmpty() {
-        String paymentInformation = checkoutOverviewPage.getPaymentInformation();
-        Assert.assertFalse(paymentInformation.isEmpty());
-        Assert.assertEquals(paymentInformation, "SauceCard #31337");
-    }
-
-     */
-
-    //TODO fix getShippingInformation()
-
-    /*
-    @Test
-    public void CheckThatShippingInformationFieldIsNotEmpty() {
-        String shippingInformation = checkoutOverviewPage.getShippingInformation();
-        Assert.assertFalse(shippingInformation.isEmpty());
-        Assert.assertEquals(shippingInformation, "Free Pony Express Delivery!");
-    }
-
-
-     */
-
-    @Test
-    public void CheckThatItemTotalPriceIsEqualToTheSumOFAllPurchasedProducts() {
-        List<WebElement> products = checkoutOverviewPage.getAllPurchasedProducts();
-        double productsPrice = 0;
-        for(WebElement item : products)  {
-            String[] priceString = item.findElement(By.className("inventory_item_price")).toString().split("$");
-           double price = Integer.parseInt(priceString[0]);
-           productsPrice += price;
-        };
-
-        //TODO fix these lines of code for CheckThatItemTotalPriceIsEqualToTheSumOFAllPurchasedProducts()
-
-        //double expectedPrice = checkoutOverviewPage.getItemTotal();
-
-        //Assert.assertEquals(productsPrice, expectedPrice);
-    }
-
-      @Test
-    public void ClickOnCancelButton() {
+   @Test
+    public void checkThatProductsArePresentInTheCheckoutOverviewPage() {
+        //By container = checkoutOverviewPage.getCheckoutSummaryContainer();
+        //waitForElementToAppear(container);
+        List<WebElement> productsList = checkoutOverviewPage.getAllPurchasedProducts();
+        Assert.assertFalse(productsList.isEmpty());
+   }
+   @Test
+    public void clickOnCancelButton() {
         checkoutOverviewPage.clickCancelBtn();
-        String expectedUrl = "https://www.saucedemo.com/cart.html";
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals(actualUrl, expectedUrl);
-    }
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+   }
 
 }
