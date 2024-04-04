@@ -10,6 +10,7 @@
             <class name ="PageTests.ProductsPageTests"></class>
             <class name ="PageTests.CartPageTests"></class>
             <class name="PageTests.CheckoutInformationTests"></class>
+
             <class name="PageTests.E2ETests"></class>
 
         </classes>
