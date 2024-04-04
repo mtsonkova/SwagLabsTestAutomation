@@ -5,19 +5,20 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
@@ -30,6 +31,7 @@ public class BaseTest {
 
     public String jsonFilePath = "src/test/utilities/testData.json";
     JSONObject jsonObject = readJSONFile(jsonFilePath);
+
     @BeforeMethod(alwaysRun = true)
     public void setUp() throws IOException {
         driver = initializeDriver();
@@ -86,23 +88,6 @@ public class BaseTest {
         }
     }
 
-    public static JSONArray readJSONFileArrays(String filePath) {
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object arr = parser.parse(new FileReader(filePath));
-
-            JSONArray jsonArray = (JSONArray) arr;
-            return jsonArray;
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
     @AfterMethod
     public void tearDown() {
         driver.quit();
@@ -128,7 +113,7 @@ public class BaseTest {
             JSONObject jsonObj = (JSONObject) result.get(i);
             //get the values of the jsonObj
 
-           value = jsonObj.get("products");
+            value = jsonObj.get("products");
 
 
             //put JSONArray values in Java ArrayList
@@ -143,6 +128,9 @@ public class BaseTest {
         return jsonObject;
     }
 
-
-
+    public void waitForElementToAppear(By element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
 }
+

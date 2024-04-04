@@ -1,8 +1,6 @@
 package pageObjects;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -12,40 +10,27 @@ import java.util.List;
 public class CheckoutOverviewPage {
     private WebDriver driver;
 
-    public CheckoutOverviewPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-    }
-
-    @FindBy(className = "cart_item_label")
-    List<WebElement> purchasedProductsList;
-
-    @FindBy(className = "summary_info_label")
-    List<WebElement> orderInfoSummaryElements;
-
-    @FindBy(className = "summary_subtotal_label")
-    WebElement subTotalPrice;
-
-    @FindBy(className = "summary_tax_label")
-    WebElement taxPrice;
-
-    @FindBy(className = "summary_total_label")
-    WebElement totalPrice;
-
+    @FindBy(id= "cart_item_label")
+    List<WebElement> purchasedProducts;
     @FindBy(id = "cancel")
     WebElement btnCancel;
 
     @FindBy(id = "finish")
     WebElement btnFinish;
 
-    public List<WebElement> getPurchasedProductsList() {
-        return purchasedProductsList;
+     public CheckoutOverviewPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    public int getPurchasedProductsListSize() {
-        return purchasedProductsList.size();
+    public List<WebElement> getAllPurchasedProducts() {
+       return purchasedProducts;
+
     }
-    public String getPaymentInformation() {
+
+    /*
+
+   public String getPaymentInformation() {
         WebElement element = orderInfoSummaryElements.get(0).findElement(By.className("summary_value_label"));
         return element.getText();
     }
@@ -73,6 +58,12 @@ public class CheckoutOverviewPage {
         return totalPrice;
     }
 
+    public WebElement getItemContainer(){
+        return checkoutContainer;
+    }
+
+
+*/
     public void clickCancelBtn() {
         btnCancel.click();
     }
@@ -81,7 +72,7 @@ public class CheckoutOverviewPage {
         btnFinish.click();
     }
 
-
-
-
+    public By getCheckoutSummaryContainer() {
+        return  By.id("checkout_summary_container");
+    }
 }
