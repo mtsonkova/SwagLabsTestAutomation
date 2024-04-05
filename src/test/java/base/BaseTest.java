@@ -48,7 +48,7 @@ public class BaseTest {
 
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            //chromeOptions.addArguments("--headless");
 
             driver = new ChromeDriver(chromeOptions);
         } else if (browser.equalsIgnoreCase("firefox")) {

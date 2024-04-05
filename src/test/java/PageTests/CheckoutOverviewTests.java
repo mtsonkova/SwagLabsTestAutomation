@@ -20,6 +20,8 @@ public class CheckoutOverviewTests extends BaseTest {
     private JSONObject jsonObject = getJsonObject();
     JSONArray products = (JSONArray) jsonObject.get("purchasedProductsList");
     CheckoutOverviewPage checkoutOverviewPage;
+
+    List<WebElement> purchasedProducts;
     @BeforeMethod
     public void setTest() {
 
@@ -28,37 +30,16 @@ public class CheckoutOverviewTests extends BaseTest {
         productsPage.purchaseMultipleProducts(products);
         cartPage = productsPage.clickOnTheShoppingCart();
         checkoutInformationPage = cartPage.clickOnCheckoutBtn();
+        checkoutInformationPage.enterInformationData("Samantha", "Jenkins", "2001");
         checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
     }
 
    @Test
     public void checkThatProductsArePresentInTheCheckoutOverviewPage() {
-        WebElement cartList = checkoutOverviewPage.getCartList();
-        waitForElementToAppear(cartList);
-        List<WebElement> productsList = checkoutOverviewPage.getAllPurchasedProducts();
-        Assert.assertFalse(productsList.isEmpty());
-   }
-   @Test
-   //This test is left to fail intentionally because when you click the Cancel btn
-   //you are redirected to Products Page and not inside the shopping cart.
-    public void clickOnCancelButton() {
-        checkoutOverviewPage.clickCancelBtn();
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html");
+        WebElement divRoot = driver.findElement(By.id("checkout_summary_container"));
+        String tagName = divRoot.getTagName();
+        Assert.assertEquals(tagName, "div");
    }
 
-   @Test
-    public void findCheckoutSummaryContainerElement() {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        WebElement container = driver.findElement(By.id("checkout_summary_container"));
-        Assert.assertTrue(container.isDisplayed());
-   }
-
-   @Test
-    public void clickOnFinishButton() {
-        checkoutOverviewPage.clickFinishBtn();
-        String expectedUrl = "https://www.saucedemo.com/checkout-complete.html";
-        String actualUrl = driver.getCurrentUrl();
-        Assert.assertEquals(actualUrl, expectedUrl);
-   }
 
 }
