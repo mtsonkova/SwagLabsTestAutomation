@@ -36,9 +36,31 @@ public class CheckoutOverviewTests extends BaseTest {
 
    @Test
     public void checkThatProductsArePresentInTheCheckoutOverviewPage() {
-        WebElement divRoot = driver.findElement(By.id("checkout_summary_container"));
-        String tagName = divRoot.getTagName();
-        Assert.assertEquals(tagName, "div");
+        List<WebElement> cartItems = checkoutOverviewPage.getCartItems();
+        int size = cartItems.size();
+        Assert.assertEquals(size, 4);
+   }
+
+   @Test
+    public void checkThatTotalPriceIsGreaterThanZeroWhenProductsArePurchased() {
+        Double totalPrice = checkoutOverviewPage.getTotalPrice();
+        Assert.assertTrue(totalPrice > 0);
+   }
+
+   @Test
+    public void clickOnCancelButton() {
+        checkoutOverviewPage.clickOnCancelButton();
+        String expectedUrl = "https://www.saucedemo.com/inventory.html";
+        String actualUrl = driver.getCurrentUrl();
+        Assert.assertEquals(actualUrl, expectedUrl);
+   }
+
+   @Test
+    public void clickOnFinishButton() {
+        checkoutOverviewPage.clickOnFinishButton();
+       String expectedUrl = "https://www.saucedemo.com/checkout-complete.html";
+       String actualUrl = driver.getCurrentUrl();
+       Assert.assertEquals(actualUrl, expectedUrl);
    }
 
 
