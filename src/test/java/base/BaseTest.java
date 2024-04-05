@@ -66,6 +66,7 @@ public class BaseTest {
         driverThreadLocal.set(driver);
         driver.manage().window().maximize();
         driver.get(baseUrl);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
         return driver;
     }
@@ -131,6 +132,11 @@ public class BaseTest {
     public void waitForElementToAppear(By element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+    }
+
+    public void waitForElementToAppear(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }
 

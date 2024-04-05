@@ -18,6 +18,9 @@ public class CheckoutOverviewPage {
     @FindBy(id = "finish")
     WebElement btnFinish;
 
+    @FindBy(className = "cart_list")
+    WebElement cartList;
+
      public CheckoutOverviewPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -26,6 +29,10 @@ public class CheckoutOverviewPage {
     public List<WebElement> getAllPurchasedProducts() {
        return purchasedProducts;
 
+    }
+
+    public WebElement getCartList() {
+         return cartList;
     }
 
     /*
@@ -68,8 +75,9 @@ public class CheckoutOverviewPage {
         btnCancel.click();
     }
 
-    public void clickFinishBtn() {
+    public OrderCompletedPage clickFinishBtn() {
         btnFinish.click();
+        return new OrderCompletedPage(driver);
     }
 
     public By getCheckoutSummaryContainer() {
