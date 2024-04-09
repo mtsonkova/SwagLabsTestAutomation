@@ -11,10 +11,40 @@ public class ProductInfoPage {
     @FindBy(tagName = "img")
     WebElement productPicture;
 
+    @FindBy(className = "inventory_details_name")
+    WebElement name;
 
+    @FindBy(className = "inventory_details_desc")
+    WebElement description;
+
+    @FindBy(className = "inventory_details_price")
+    WebElement priceString;
+
+    @FindBy(className = "btn_inventory")
+    WebElement button;
     public ProductInfoPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+    }
 
+    public String getProductName() {
+        return name.getText();
+    }
+
+    public String getProductDescription() {
+        return description.getText();
+    }
+
+    public double getProductPrice() {
+        double price = Double.parseDouble(priceString.getText().substring(1));
+        return price;
+    }
+
+    public String getBtnText() {
+        return button.getText();
+    }
+
+    public void clickOnTheButton() {
+        button.click();
     }
 }
