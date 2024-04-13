@@ -45,12 +45,17 @@ public class BaseTest {
         FileInputStream input = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\utilities\\globalConfig.properties");
         properties.load(input);
 
-        String browser = properties.getProperty("browser");
+        String browser = "";
+        if (System.getProperty("browser") != null) {
+            browser = System.getProperty("browser");
+        } else {
+            browser = properties.getProperty("browser");
+        }
         String baseUrl = properties.getProperty("baseUrl");
 
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            //chromeOptions.addArguments("--headless");
 
             driver = new ChromeDriver(chromeOptions);
         } else if (browser.equalsIgnoreCase("firefox")) {
@@ -143,13 +148,13 @@ public class BaseTest {
 
     public static ProductInfoPage clickOnProductName(String name) {
         List<WebElement> products = driver.findElements(By.className("inventory_item_name"));
-                for(WebElement product : products) {
-                    if(product.getText().equals(name)) {
-                        product.click();
-                        break;
-                    }
-                }
-                return new ProductInfoPage(driver);
+        for (WebElement product : products) {
+            if (product.getText().equals(name)) {
+                product.click();
+                break;
+            }
+        }
+        return new ProductInfoPage(driver);
     }
 }
 

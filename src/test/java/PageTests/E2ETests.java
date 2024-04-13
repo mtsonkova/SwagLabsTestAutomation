@@ -1,65 +1,97 @@
 package PageTests;
 
 import base.BaseTest;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pageObjects.*;
 
 import java.time.Duration;
 import java.util.List;
 
 public class E2ETests extends BaseTest {
 
+
     By storeItems = By.className("inventory_item_name");
+    private LoginPage loginPage;
+    private String firstName = "Angela";
+    private String lastName = "Ramirez";
+    private String postCode = "3000";
+
+    private JSONObject jsonObject = getJsonObject();
+    @BeforeMethod
+    public void setTest(){
+        loginPage = new LoginPage(driver);
+    }
     @Test
     public void PurchaseAllProductsAndCheckOrder() {
-        WebElement usernameField = driver.findElement(By.id("user-name"));
-        WebElement passwordField = driver.findElement(By.id("password"));
-        WebElement btn_login = driver.findElement(By.id("login-button"));
+        ProductsPage productsPage = loginPage.validLogin();
+        productsPage.AddAllProductsToTheShoppingCart();
+        CartPage shoppingCart = productsPage.clickOnTheShoppingCart();
+        CheckoutInformationPage checkoutInformationPage = shoppingCart.clickOnCheckoutBtn();
+        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
+        OrderCompletedPage orderCompletedPage = checkoutOverviewPage.clickOnFinishButton();
+        String header = orderCompletedPage.getHeaderText();
+        Assert.assertTrue(header.contains("Thank you"));
+    }
 
-        usernameField.sendKeys("standard_user");
-        passwordField.sendKeys("secret_sauce");
-        btn_login.click();
+    @Test(dataProvider = "products")
+    public void PurchaseMultipleProductsAndCheckOrder(JSONArray products) {
+        ProductsPage productsPage = loginPage.validLogin();
+        productsPage.purchaseMultipleProducts(products);
+        CartPage shoppingCart = productsPage.clickOnTheShoppingCart();
+        CheckoutInformationPage checkoutInformationPage = shoppingCart.clickOnCheckoutBtn();
+        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
+        OrderCompletedPage orderCompletedPage = checkoutOverviewPage.clickOnFinishButton();
+        String header = orderCompletedPage.getHeaderText();
+        Assert.assertTrue(header.contains("Thank you"));
+    }
 
+    @Test
+    public void performMultipleProductsFiltersAndPurchaseMultipleProducts() {
+        ProductsPage productsPage = loginPage.validLogin();
+        productsPage.sortProductsByNameFromZtoA();
+        String firstProduct = productsPage.getFirstProduct();
+        productsPage.AddProductInTheShoppingCartByName(firstProduct);
+        productsPage.sortProductsByPriceHighToLow();
+        String product = productsPage.getProductByItsIndex(3);
+        productsPage.AddProductInTheShoppingCartByName(product);
+        CartPage shoppingCart = productsPage.clickOnTheShoppingCart();
+        shoppingCart.clickOnContinueShoppingBtn();
+        String lastProduct = productsPage.getLastProduct();
+        productsPage.AddProductInTheShoppingCartByName(lastProduct);
+        productsPage.clickOnTheShoppingCart();
+        CheckoutInformationPage checkoutInformationPage = shoppingCart.clickOnCheckoutBtn();
+        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
+        OrderCompletedPage orderCompletedPage = checkoutOverviewPage.clickOnFinishButton();
+        orderCompletedPage.clickOnBackHomeBtn();
+        String currentUrl = driver.getCurrentUrl();
+        String expectedUrl = "https://www.saucedemo.com/inventory.html";
+        Assert.assertEquals(currentUrl, expectedUrl);
+    }
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(storeItems));
-
-        List<WebElement> inventoryItemsLayout = driver.findElements(By.className("inventory_item_description"));
-
-       // Add all elements to cart
-       for(WebElement element : inventoryItemsLayout) {
-
-          // WebElement priceBar = element.findElement(By.cssSelector(".pricebar"));
-            WebElement btn_AddToCart = element.findElement(By.tagName("button"));
-            btn_AddToCart.click();
-        }
-        WebElement shopingCartIcon = driver.findElement(By.className("shopping_cart_link"));
-       shopingCartIcon.click();
-
-       WebElement btn_Checkout = driver.findElement(By.id("checkout"));
-       btn_Checkout.click();
-
-       WebElement firstNameInput = driver.findElement(By.id("first-name"));
-       WebElement lastNameInput = driver.findElement(By.id("last-name"));
-       WebElement postalCodeInput = driver.findElement(By.id("postal-code"));
-
-       firstNameInput.sendKeys("Samantha");
-       lastNameInput.sendKeys("Green");
-       postalCodeInput.sendKeys("1234");
-
-       WebElement btn_Continue = driver.findElement(By.id("continue"));
-       btn_Continue.click();
-
-       WebElement btn_Finish = driver.findElement(By.id("finish"));
-       btn_Finish.click();
-
-       WebElement confirmationHeader = driver.findElement(By.tagName("h2"));
-       String text = confirmationHeader.getText();
-
-        Assert.assertTrue(text.contains("Thank you"));
-       }
+    @Test
+    public void purchaseMultipleProductsAndRemoveProductsFromCart() {
+        ProductsPage productsPage = loginPage.validLogin();
+        productsPage.AddAllProductsToTheShoppingCart();
+        CartPage shoppingCart = productsPage.clickOnTheShoppingCart();
+        shoppingCart.removeFirstProductFromTheCart();
+        shoppingCart.removeLastProductFromTheCart();
+        shoppingCart.removeProductFromTheCartByIndex(2);
+        CheckoutInformationPage checkoutInformationPage = shoppingCart.clickOnCheckoutBtn();
+        checkoutInformationPage.enterInformationData(firstName, lastName, postCode);
+        CheckoutOverviewPage checkoutOverviewPage = checkoutInformationPage.clickOnContinueBtn();
+        OrderCompletedPage orderCompletedPage = checkoutOverviewPage.clickOnFinishButton();
+        String header = orderCompletedPage.getHeaderText();
+        Assert.assertTrue(header.contains("Thank you"));
+    }
 }

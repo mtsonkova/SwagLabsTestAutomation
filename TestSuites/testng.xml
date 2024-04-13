@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="D:/Projects/SwagLabsTestAutomation/testng.xml">
+        <classes>
+            <class name="PageTests.LoginPageTests"/>
+            <class name="PageTests.ProductsPageTests"></class>
+            <class name="PageTests.ProductInfoTest"></class>
+            <class name="PageTests.CartPageTests"></class>
+            <class name="PageTests.CheckoutInformationTests"></class>
+            <class name="PageTests.CheckoutOverviewTests"></class>
+            <class name="PageTests.OrderCompletedTests"></class>
+            <class name="PageTests.E2ETests"></class>
+        </classes>
+    </test>
+</suite>

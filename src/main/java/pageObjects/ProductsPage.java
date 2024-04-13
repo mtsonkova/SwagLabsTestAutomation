@@ -170,7 +170,6 @@ public class ProductsPage {
             }
         }
     }
-
     public CartPage clickOnTheShoppingCart() {
         shoppingCart.click();
         return new CartPage(driver);
@@ -203,6 +202,26 @@ public class ProductsPage {
             productNames.add(productName);
         }
         return productNames;
+    }
+
+    public String getFirstProduct() {
+        String firstProductName = getAllInventoryItemsDescription().getFirst().getText();
+        return firstProductName;
+    }
+
+    public String getLastProduct() {
+        String lastProductName = getAllInventoryItemsDescription().getLast().getText();
+        return lastProductName;
+    }
+
+    public String getProductByItsIndex(int index) {
+        String name = "";
+        int size = getAllInventoryItemsDescription().size();
+        if(index >= 0 && index < size) {
+            name = getAllInventoryItemsDescription().get(index).getText();
+        }
+
+        return name;
     }
 
 }

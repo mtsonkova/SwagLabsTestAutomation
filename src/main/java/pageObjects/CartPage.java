@@ -43,6 +43,10 @@ public class CartPage {
         return new CheckoutInformationPage(driver);
     }
 
+    public String getCartProductName(WebElement element) {
+        return element.getText();
+    }
+
     public void clickOnRemoveBtn(WebElement element) {
         //element.findElement(By.tagName("button")).click();
         btnRemove.click();
@@ -54,6 +58,41 @@ public class CartPage {
 
     public List<WebElement> getAllProductsFromCart() {
         return productsInCart;
+    }
+
+    public void removeProductFromTheCartByName(String productName) {
+        List<WebElement> cartProducts = getAllProductsFromCart();
+        WebElement product = cartProducts
+                .stream()
+                .filter(cartProduct -> getCartProductName(cartProduct).equals(productName))
+                .findFirst()
+                .orElse(null);
+        clickOnRemoveBtn(product);
+    }
+
+    public void removeProductFromTheCartByIndex(int index) {
+        List<WebElement> cartProducts = getAllProductsFromCart();
+        int size = cartProducts.size();
+        if(index >= 0 && index < size) {
+            WebElement currentProduct = cartProducts.get(index);
+            String name = currentProduct.getText();
+            clickOnRemoveBtn(currentProduct);
+        }
+
+    }
+
+    public void removeFirstProductFromTheCart() {
+        List<WebElement> cartProducts = getAllProductsFromCart();
+        WebElement currentProduct = cartProducts.getFirst();
+        String name = currentProduct.getText();
+        clickOnRemoveBtn(currentProduct);
+    }
+
+    public void removeLastProductFromTheCart() {
+        List<WebElement> cartProducts = getAllProductsFromCart();
+        WebElement currentProduct = cartProducts.getLast();
+        String name = currentProduct.getText();
+        clickOnRemoveBtn(currentProduct);
     }
 
 
