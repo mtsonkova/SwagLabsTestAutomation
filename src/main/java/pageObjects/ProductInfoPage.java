@@ -22,6 +22,9 @@ public class ProductInfoPage {
 
     @FindBy(className = "btn_inventory")
     WebElement button;
+
+    @FindBy(className = "inventory_details_img")
+    WebElement image;
     public ProductInfoPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -46,5 +49,9 @@ public class ProductInfoPage {
 
     public void clickOnTheButton() {
         button.click();
+    }
+
+    public WebElement getImage(){
+        return image;
     }
 }

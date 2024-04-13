@@ -15,12 +15,14 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
+import pageObjects.ProductInfoPage;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 public class BaseTest {
@@ -137,6 +139,17 @@ public class BaseTest {
     public void waitForElementToAppear(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public static ProductInfoPage clickOnProductName(String name) {
+        List<WebElement> products = driver.findElements(By.className("inventory_item_name"));
+                for(WebElement product : products) {
+                    if(product.getText().equals(name)) {
+                        product.click();
+                        break;
+                    }
+                }
+                return new ProductInfoPage(driver);
     }
 }
 
