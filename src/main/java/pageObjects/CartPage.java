@@ -83,16 +83,16 @@ public class CartPage {
 
     public void removeFirstProductFromTheCart() {
         List<WebElement> cartProducts = getAllProductsFromCart();
-        WebElement currentProduct = cartProducts.getFirst();
-        String name = currentProduct.getText();
-        clickOnRemoveBtn(currentProduct);
+        WebElement firstProduct = cartProducts.getFirst();
+        String name = firstProduct.getText();
+        clickOnRemoveBtn(firstProduct);
     }
 
     public void removeLastProductFromTheCart() {
         List<WebElement> cartProducts = getAllProductsFromCart();
-        WebElement currentProduct = cartProducts.getLast();
-        String name = currentProduct.getText();
-        clickOnRemoveBtn(currentProduct);
+        WebElement lastProduct = cartProducts.getLast();
+        String name = lastProduct.getText();
+        clickOnRemoveBtn(lastProduct);
     }
 
 

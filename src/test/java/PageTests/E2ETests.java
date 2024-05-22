@@ -79,6 +79,10 @@ public class E2ETests extends BaseTest {
         Assert.assertEquals(currentUrl, expectedUrl);
     }
 
+    //TODO
+    // solve removeLastProductFromTheCart
+    // solve removeProductFromTheCartByIndex
+
     @Test
     public void purchaseMultipleProductsAndRemoveProductsFromCart() {
         ProductsPage productsPage = loginPage.validLogin();
